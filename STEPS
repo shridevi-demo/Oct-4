@@ -1,0 +1,11 @@
+1. Generate test class by eclipse
+2. Add Runwith annotation @RunWith(SpringRunner.class) --> helps understand bean speacific beahviour like autowire, mocking beans etc
+3. Add SpringBootTest annotation @SpringBootTest --> helps relate to actual application. Like from where to provide autowired dependency.
+4. Analyze the class we are testing and mock all the dependencies.
+    For eg, for RESTAPIAdapter, mock RESTCallout object
+    For eg, for EventFlowProcessor, mock all dependencies like ValidationServices, TransformService, EnrichmentService, .. .. etc.
+5. Autowire the class being tested. So to test RESTAPIAdapter, autowire RESTAPIAdapter.
+6. Look for the method signature, which we are going to test. Mock its dependencies.
+7. Define behaviour of your mocks, which are called within this method, or by dependencies of this method. [ when. thenReturn or when. thenThrow, etc]
+8. Call method in test with mocks / required params 
+9. Verify using
