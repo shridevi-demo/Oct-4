@@ -59,7 +59,7 @@ public class EventFlowProcessorUnitTest {
         
         PaymentInitWrapper paymentInitWrapper = new PaymentInitWrapper();
         PaymentInitWrapper paymentInitWrapperWithError = new PaymentInitWrapper();
-        paymentInitWrapperWithError.addIrrecoverableError(""); // << add one validation irrecoverable error here
+        paymentInitWrapperWithError.addIrrecoverableError(EventStage.FWD_FLOW_VALIDATION_IRRECOVERABLE_ERROR.toString()); // <<<<< change this
         
         when(validationService.validateRequest(any())).thenReturn(paymentInitWrapperWithError);
         when(enrichmentService.enrichRequest(any())).thenReturn(paymentInitWrapper);
@@ -73,7 +73,7 @@ public class EventFlowProcessorUnitTest {
         verify(transformService, times(0)).transformMessage(any(PaymentInitWrapper.class));
         verify(routerObj, times(0)).publishToSubscribedChannels(any(PaymentInitWrapper.class));
 
-        verify(eventManager, atLeast(1)).pushEvent(eq("<the error which u used in top>"), any(PaymentInitWrapper.class));
+        verify(eventManager, atLeast(1)).pushEvent(eq(EventStage.FWD_FLOW_VALIDATION_IRRECOVERABLE_ERROR), any(PaymentInitWrapper.class)); // << change this
     }
 
     @Test 
